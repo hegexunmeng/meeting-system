@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1">
+	<display-name>meetingcp</display-name>
+	<!-- 监听器 -->
+	<listener>
+		<listener-class>com.meeting.listener.CounterListener</listener-class>
+	</listener>
+
+	<filter>
+		<filter-name>LoginCookieFilter</filter-name>
+		<filter-class>com.meeting.filter.LoginCookieFilter</filter-class>
+	</filter>
+
+	<!-- 中文编码过滤器 -->
+	<filter>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<filter-class>com.meeting.filter.CharacterEncodingFilter</filter-class>
+	</filter>
+	<!-- 优化登录 -->
+	<filter-mapping>
+		<filter-name>LoginCookieFilter</filter-name>
+		<url-pattern>/login.jsp</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+
+
+	<!-- 登录拦截过滤器 -->
+	<filter>
+		<filter-name>LoginedFilter</filter-name>
+		<filter-class>com.meeting.filter.LoginedFilter</filter-class>
+	</filter>
+	<!-- 中文编码 -->
+	<filter-mapping>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<url-pattern>*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+
+	<!-- 管理员登录成功页面拦截 -->
+	<filter-mapping>
+		<filter-name>LoginedFilter</filter-name>
+		<url-pattern>/adminindex.jsp</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>LoginedFilter</filter-name>
+		<url-pattern>/employeeindex.jsp</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+	</filter-mapping>
+		<filter-mapping>
+		<filter-name>LoginedFilter</filter-name>
+		<url-pattern>/index.jsp</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+	</filter-mapping>
+
+	<!-- 登陆 -->
+	<servlet>
+		<servlet-name>LoginServlet</servlet-name>
+		<servlet-class>com.meeting.servlet.LoginServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/LoginServlet</url-pattern>
+	</servlet-mapping>
+
+	<!-- 注册 -->
+	<servlet>
+		<servlet-name>RegistServlet</servlet-name>
+		<servlet-class>com.meeting.servlet.RegistServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RegistServlet</servlet-name>
+		<url-pattern>/RegistServlet</url-pattern>
+	</servlet-mapping>
+
+	<!-- 部门查询 -->
+	<servlet>
+		<servlet-name>ViewAllDepartmentsServlet</servlet-name>
+		<servlet-class>com.meeting.servlet.ViewAllDepartmentsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ViewAllDepartmentsServlet</servlet-name>
+		<url-pattern>/ViewAllDepartmentsServlet</url-pattern>
+	</servlet-mapping>
+
+	<!-- 用户名查询,来做到及时判断用户名是否存在 -->
+	<servlet>
+		<servlet-name>ValidateUsernameServlet</servlet-name>
+		<servlet-class>com.meeting.servlet.ValidateUsernameServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ValidateUsernameServlet</servlet-name>
+		<url-pattern>/ValidateUsernameServlet</url-pattern>
+	</servlet-mapping>
+
+	<!-- 查看待审批 -->
+	<servlet>
+		<servlet-name>ViewAllEmployeesServlet</servlet-name>
+		<servlet-class>com.meeting.servlet.ViewAllEmployeesServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ViewAllEmployeesServlet</servlet-name>
+		<url-pattern>/ViewAllEmployeesServlet</url-pattern>
+	</servlet-mapping>
+
+	<!--操作注册审批的:通过/不通过 -->
+	<servlet>
+		<servlet-name>ApproveServlet</servlet-name>
+		<servlet-class>com.meeting.servlet.ApproveServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ApproveServlet</servlet-name>
+		<url-pattern>/ApproveServlet</url-pattern>
+	</servlet-mapping>
+
+	<!--添加删除部门 -->
+	<servlet>
+		<servlet-name>AddDeleteDepartmentServlet</servlet-name>
+		<servlet-class>com.meeting.servlet.AddDeleteDepartmentServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddDeleteDepartmentServlet</servlet-name>
+		<url-pattern>/AddDeleteDepartmentServlet</url-pattern>
+	</servlet-mapping>
+
+
+	<!--查询员工功能 -->
+	<servlet>
+		<servlet-name>SearchEmployeesServlet</servlet-name>
+		<servlet-class>com.meeting.servlet.SearchEmployeesServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SearchEmployeesServlet</servlet-name>
+		<url-pattern>/SearchEmployeesServlet</url-pattern>
+	</servlet-mapping>
+
+
+
+
+	<!--查看会议室功能 -->
+	<servlet>
+		<servlet-name>ViewAllMeetingRoomsServlet</servlet-name>
+		<servlet-class>com.meeting.servlet.ViewAllMeetingRoomsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ViewAllMeetingRoomsServlet</servlet-name>
+		<url-pattern>/ViewAllMeetingRoomsServlet</url-pattern>
+	</servlet-mapping>
+
+	<!-- 查看会议室-查看详情 -->
+	<servlet>
+		<servlet-name>ViewOneMeetingRoomServlet</servlet-name>
+		<servlet-class>com.meeting.servlet.ViewOneMeetingRoomServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ViewOneMeetingRoomServlet</servlet-name>
+		<url-pattern>/ViewOneMeetingRoomServlet</url-pattern>
+	</servlet-mapping>
+
+	<!-- 查看会议室-查看详情 确认修改 -->
+	<servlet>
+		<servlet-name>UpdateMeetingRoomServlet</servlet-name>
+		<servlet-class>com.meeting.servlet.UpdateMeetingRoomServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UpdateMeetingRoomServlet</servlet-name>
+		<url-pattern>/UpdateMeetingRoomServlet</url-pattern>
+	</servlet-mapping>
+
+
+	<!-- 添加会议室 -->
+	<servlet>
+		<servlet-name>AddMeetingRoomServlet</servlet-name>
+		<servlet-class>com.meeting.servlet.AddMeetingRoomServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddMeetingRoomServlet</servlet-name>
+		<url-pattern>/AddMeetingRoomServlet</url-pattern>
+	</servlet-mapping>
+
+
+	<!-- 预定会议 -->
+	<servlet>
+		<servlet-name>BookMeetingServlet</servlet-name>
+		<servlet-class>com.meeting.servlet.BookMeetingServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BookMeetingServlet</servlet-name>
+		<url-pattern>/BookMeetingServlet</url-pattern>
+	</servlet-mapping>
+
+
+	<!-- 选择部门的时候显示员工列表 -->
+	<servlet>
+		<servlet-name>SelectEmployeesOfDeptServlet</servlet-name>
+		<servlet-class>com.meeting.servlet.SelectEmployeesOfDeptServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SelectEmployeesOfDeptServlet</servlet-name>
+		<url-pattern>/SelectEmployeesOfDeptServlet</url-pattern>
+	</servlet-mapping>
+
+
+	<!-- 我的预定 -->
+	<servlet>
+		<servlet-name>ViewMyBookingServlet</servlet-name>
+		<servlet-class>com.meeting.servlet.ViewMyBookingServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ViewMyBookingServlet</servlet-name>
+		<url-pattern>/ViewMyBookingServlet</url-pattern>
+	</servlet-mapping>
+
+
+	<!-- 我的会议 -->
+	<servlet>
+		<servlet-name>ViewMyMeetingsServlet</servlet-name>
+		<servlet-class>com.meeting.servlet.ViewMyMeetingsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ViewMyMeetingsServlet</servlet-name>
+		<url-pattern>/ViewMyMeetingsServlet</url-pattern>
+	</servlet-mapping>
+
+	<!-- 我的会议-详情 -->
+	<servlet>
+		<servlet-name>ViewMyMeetingDetailServlet</servlet-name>
+		<servlet-class>com.meeting.servlet.ViewMyMeetingDetailServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ViewMyMeetingDetailServlet</servlet-name>
+		<url-pattern>/ViewMyMeetingDetailServlet</url-pattern>
+	</servlet-mapping>
+
+	<!-- 我的预定-详情 -->
+	<servlet>
+		<servlet-name>ViewMyBookingDetailServlet</servlet-name>
+		<servlet-class>com.meeting.servlet.ViewMyBookingDetailServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ViewMyBookingDetailServlet</servlet-name>
+		<url-pattern>/ViewMyBookingDetailServlet</url-pattern>
+	</servlet-mapping>
+
+
+	<!-- 取消 -我的预定 -->
+	<servlet>
+		<servlet-name>CancelMeetingServlet</servlet-name>
+		<servlet-class>com.meeting.servlet.CancelMeetingServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CancelMeetingServlet</servlet-name>
+		<url-pattern>/CancelMeetingServlet</url-pattern>
+	</servlet-mapping>
+
+
+	<!-- 我的通知 -->
+	<servlet>
+		<servlet-name>MyNotificationServlet</servlet-name>
+		<servlet-class>com.meeting.servlet.MyNotificationServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MyNotificationServlet</servlet-name>
+		<url-pattern>/MyNotificationServlet</url-pattern>
+	</servlet-mapping>
+
+	
+
+	<!-- 查询可用的会议室 -->
+	<servlet>
+		<servlet-name>RefreshRoomsServlet</servlet-name>
+		<servlet-class>com.meeting.servlet.RefreshRoomsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RefreshRoomsServlet</servlet-name>
+		<url-pattern>/RefreshRoomsServlet</url-pattern>
+	</servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>login.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>
