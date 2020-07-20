@@ -11,3 +11,7 @@ Jsp+Servlet+JavaBean的会议管理系统
 运行环境:
 Eclipse + java8  +Tomcat8.0
 
+域名教程:
+https://blog.csdn.net/wudingan/category_9236795.html
+
+
